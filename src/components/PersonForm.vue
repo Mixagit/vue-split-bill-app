@@ -2,11 +2,11 @@
     <form @submit.prevent>
         <h4>Добавить пользователя</h4>
         <my-input 
+          v-focus
           v-model="person.name" 
           type="text" 
-          :placeholder="'Имя'"
-        >
-        </my-input>
+          placeholder="Имя"
+        />
         <my-button 
           class="btn__create"
           @click="createPerson" 
@@ -37,16 +37,11 @@ export default {
 }
 </script>
 
-<style scoped>
-form {
-    display: flex;
-    flex-direction: column;
-  }
-.input__name {
-    
-}
-.btn__create {
-    align-self: flex-end;
-    margin-top: 15px;
-}
+<style scoped lang="sass">
+form
+    display: flex
+    flex-direction: column
+.btn__create
+    align-self: flex-end
+    margin-top: 15px
 </style>

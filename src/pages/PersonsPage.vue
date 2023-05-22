@@ -1,5 +1,7 @@
 <template>
     <div>
+        <h1> {{ $store.getters.doubleLikes }}</h1>
+        <my-button @click="$store.commit('incrementLikes')">Like</my-button>
         <h1>Страница с персонами</h1>
         <my-button
             class="add__btn" 
@@ -35,28 +37,27 @@ components: {
 },
 data() {
     return {
-    persons: [
-        {id: 1, name: 'Vasya'},
-        {id: 2, name: 'Ivan'},
-        {id: 3, name: 'Sanya'}
-    ],
-    dialogVisible: false,
+        persons: [
+                {id: 1, name: 'Vasya'},
+                {id: 2, name: 'Ivan'},
+                {id: 3, name: 'Sanya'}
+            ],
+        dialogVisible: false,
     }
 },
 methods: {
     createPerson(person) {
-    this.persons.push(person);
-    this.dialogVisible = false;
+        this.persons.push(person);
+        this.dialogVisible = false;
     },
     removePerson(person) {
-    this.persons = this.persons.filter(p => p.id !== person.id)
+        this.persons = this.persons.filter(p => p.id !== person.id)
     }
 }
 }
 </script>
 
-<style>
-.add__btn {
-    margin: 15px 0;
-}
+<style scoped lang="sass">
+.add__btn
+    margin: 15px 0
 </style>

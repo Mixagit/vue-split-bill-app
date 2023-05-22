@@ -1,5 +1,5 @@
 <template>
-    <button class="btn">
+    <button class="my-btn">
         <slot></slot>
     </button>
 </template>
@@ -10,12 +10,11 @@ export default {
 }
 </script>
 
-<style scoped>
-.btn {
-    padding: 10px 15px;
-    background: none;
-    color: teal;
-    border: 2px solid teal;
-    border-radius: 15px;
-}
+<style scoped lang="sass">
+.my-btn
+    padding: 10px 15px
+    background: none
+    color: teal
+    border: 2px solid teal
+    border-radius: 15px
 </style>

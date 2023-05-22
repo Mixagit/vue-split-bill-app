@@ -28,14 +28,13 @@ export default {
 }
 </script>
 
-<style scoped>
-.person {
-    padding: 15px;
-    border: 2px solid teal;
-    border-radius: 15px;
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+<style scoped lang="sass">
+.person
+    padding: 15px
+    border: 2px solid teal
+    border-radius: 15px
+    margin-top: 15px
+    display: flex
+    align-items: center
+    justify-content: space-between
 </style>
