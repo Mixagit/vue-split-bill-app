@@ -1,12 +1,12 @@
 <template>
     <form @submit.prevent>
         <h4>Добавить пользователя</h4>
-        <input 
+        <my-input 
           v-model="person.name" 
-          class="input__name" 
           type="text" 
-          placeholder="Имя"
+          :placeholder="'Имя'"
         >
+        </my-input>
         <my-button 
           class="btn__create"
           @click="createPerson" 
@@ -22,7 +22,7 @@ export default {
         return {
             person: {
                 name: ''
-            }
+            }, 
         }
     },
     methods: {
@@ -43,13 +43,10 @@ form {
     flex-direction: column;
   }
 .input__name {
-    width: 100%;
-    border: 2px solid teal;
-    border-radius: 15px;
-    padding: 10px 15px;
-    margin-top: 15px;
+    
 }
 .btn__create {
     align-self: flex-end;
+    margin-top: 15px;
 }
 </style>

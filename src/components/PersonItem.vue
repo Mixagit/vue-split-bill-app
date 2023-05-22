@@ -4,8 +4,15 @@
             <div><strong>Имя персоны: </strong>{{ person.name }}</div>
         </div>
         <div class="person__btns">
-            <my-button>Удалить</my-button>
-            <my-button>Изменить</my-button>
+            <my-button
+                @click="$emit('remove', remove)"
+            >
+                Удалить
+            </my-button>
+            <my-button
+            >
+                Изменить
+            </my-button>
         </div>
     </div>
 </template>
