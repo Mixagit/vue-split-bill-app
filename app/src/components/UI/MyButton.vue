@@ -1,5 +1,5 @@
 <template>
-    <button class="my-btn">
+    <button class="btn btn-outline-success">
         <slot></slot>
     </button>
 </template>

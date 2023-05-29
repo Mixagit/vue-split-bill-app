@@ -1,14 +1,22 @@
 <template>
-    <div class="person">
+    <div class="product">
         <div>
-            <div><strong>Имя персоны: </strong>{{ person.name }}</div>
+            <div><strong>Название продукта: </strong>{{ product.name }}</div>
             <my-input 
-                v-model="person.name" 
+                v-model="product.name" 
                 type="text" 
                 placeholder="Имя"
             />
         </div>
-        <div class="person__btns">
+        <div>
+            <div><strong>Цена продукта: </strong>{{ product.price }}</div>
+            <my-input 
+                v-model="product.price" 
+                type="text" 
+                placeholder="Цена"
+            />
+        </div>
+        <div class="product__btns">
             <button 
                 type="button" 
                 class="btn btn-outline-danger remove__btn"
@@ -23,7 +31,7 @@
 <script>
 export default {
     props: {
-        person: {
+        product: {
             type: Object,
             required: true
         }
@@ -32,7 +40,7 @@ export default {
 </script>
 
 <style scoped lang="sass">
-.person
+.product
     padding: 15px
     border: 2px solid teal
     border-radius: 15px
