@@ -1,6 +1,6 @@
 <template>
     <div v-if="persons.length > 0">
-        <h3>Список персон</h3>
+        <h3>Список людей</h3>
         <transition-group name="person-list">
             <person-item  
                 v-for="person in persons"

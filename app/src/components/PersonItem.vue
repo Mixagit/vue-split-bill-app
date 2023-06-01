@@ -1,34 +1,30 @@
 <template>
-    <div class="person">
-        <div>
-            <div><strong>Имя персоны: </strong>{{ person.name }}</div>
-            <my-input 
-                v-model="person.name" 
-                type="text" 
-                placeholder="Имя"
-            />
-        </div>
-        <div class="person__btns">
-            <button 
-                type="button" 
-                class="btn btn-outline-danger remove__btn"
-                @click="$emit('remove', remove)"
-            >
-                Удалить
-            </button>
-        </div>
+  <div class="person">
+    <div>
+      <div><strong>Имя человека: </strong>{{ person.name }}</div>
+      <my-input v-model="person.name" type="text" placeholder="Имя" />
     </div>
+    <div class="person__btns">
+      <button
+        type="button"
+        class="btn btn-outline-danger remove__btn"
+        @click="$emit('remove', remove)"
+      >
+        Удалить
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-    props: {
-        person: {
-            type: Object,
-            required: true
-        }
+  props: {
+    person: {
+      type: Object,
+      required: true
     }
-}
+  }
+};
 </script>
 
 <style scoped lang="sass">
