@@ -8,10 +8,10 @@ export const personModule = {
   }),
   getters: {},
   mutations: {
-    ADD_PERSON(state, person) {
+    add(state, person) {
       state.persons.push(person);
     },
-    REMOVE_PERSON(state, personId) {
+    remove(state, personId) {
       state.persons = state.persons.filter(p => p.id !== personId);
     }
   },
@@ -21,10 +21,10 @@ export const personModule = {
         id: Date.now(),
         name: ''
       };
-      commit('ADD_PERSON', person);
+      commit('add', person);
     },
     removePerson({ commit }, person) {
-      commit('REMOVE_PERSON', person.id);
+      commit('remove', person.id);
     }
   },
   namespaced: true
