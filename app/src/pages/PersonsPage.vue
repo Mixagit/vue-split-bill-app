@@ -8,51 +8,63 @@
     >
       Добавить человека
     </button>
-    <div>
-      <div v-if="persons.length > 0">
-        <h3>Список людей</h3>
-        <transition-group name="person-list">
-          <div class="person" v-for="person in persons" :key="person.id">
-            <div>
-              <div><strong>Имя человека: </strong>{{ person.name }}</div>
-              <my-input v-model="person.name" type="text" placeholder="Имя" />
-            </div>
-            <div class="person__btns">
-              <button
-                type="button"
-                class="btn btn-outline-danger remove__btn"
-                @click="removePerson(person)"
-              >
-                Удалить
-              </button>
-            </div>
+
+    <div v-if="persons.length > 0">
+      <h3>Список людей</h3>
+      <list-component>
+        <div class="person" v-for="person in persons" :key="person.id">
+          <div>
+            <div><strong>Имя человека: </strong>{{ person.name }}</div>
+            <my-input v-model="person.name" type="text" placeholder="Имя" />
           </div>
-        </transition-group>
-      </div>
-      <h2 v-else style="color: red">Список пользователей пуст</h2>
+          <div class="person__btns">
+            <button
+              type="button"
+              class="btn btn-outline-danger remove__btn"
+              @click="removePerson(person)"
+            >
+              Удалить
+            </button>
+          </div>
+        </div>
+      </list-component>
     </div>
+
     <button
       type="button"
       class="btn btn-outline-success"
-      :class="{
-        next__btn: persons.length >= 2,
-        'stop-next__btn': persons.length < 2
-      }"
-      @click="goToProductsPage"
+      :class="{ isDisabledNextBtn: persons.length < 2 }"
+      @click="handleButtonClick"
     >
-      {{ nextBtnText }}
+      {{
+        persons.length === 0
+          ? 'Но тут же никого нет!'
+          : persons.length === 1
+          ? 'Добавьте еще кого-нибудь'
+          : 'Перейти к добавлению позиций в меню'
+      }}
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        :class="{ disabled: isDisabled }"
+        @click="goToProductsPages"
+      >
+        {{ nextButtonText }}
+      </button>
     </button>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import ListComponent from '@/components/ListComponent.vue';
 
 export default {
-  components: {},
+  components: { ListComponent },
   data() {
     return {
-      nextBtnText: 'Перейти к добавлению позиций в меню'
+      isDisabledNextBtn: false,
+      nextButtonText: 'Перейти к добавлению позиций в меню'
     };
   },
   methods: {
@@ -60,7 +72,7 @@ export default {
       createPerson: 'person/createPerson',
       removePerson: 'person/removePerson'
     }),
-    goToProductsPage(event) {
+    goToProductsPages() {
       if (this.persons.length >= 2) {
         this.$router.push('/products');
       } else if (this.persons.length === 0) {
@@ -100,16 +112,6 @@ export default {
     align-self: flex-center
     margin-top: 15px
     color: red
-.person-list-item
-    display: inline-block
-    margin-right: 10px
-.person-list-enter-active,
-.person-list-leave-active
-    transition: all 0.4s ease
-.person-list-enter-from,
-.person-list-leave-to
-    opacity: 0
-    transform: translateX(130px)
 .person
     padding: 15px
     border: 2px solid teal

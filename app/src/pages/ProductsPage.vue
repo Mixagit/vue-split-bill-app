@@ -1,68 +1,56 @@
 <template>
-    <div class="products">
-        <h1>Добавление позиций меню</h1>
-        <button 
-            type="button" 
-            class="btn btn-outline-primary add__btn"
-            @click="createProduct"
-        >
-            Добавить позицию
-        </button>
-        <product-list 
-            :products="products"
-            @remove="removeProduct"
-        >
-        </product-list>
-        <button
-        type="button" 
-            class="btn btn-outline-success"
-            :class="{ 
-                'next__btn': products.length >= 1,
-                'stop-next__btn': products.length < 1
-            }"
-            @click="goToResultsPage"
-        >
-            {{ nextBtnText }}
-        </button>
-    </div>
+  <div class="products">
+    <h1>Добавление позиций меню</h1>
+    <button
+      type="button"
+      class="btn btn-outline-primary add__btn"
+      @click="createProduct"
+    >
+      Добавить позицию
+    </button>
+    <product-list :products="products" @remove="removeProduct"> </product-list>
+    <button
+      type="button"
+      class="btn btn-outline-success"
+      :class="{
+        next__btn: products.length >= 1,
+        'stop-next__btn': products.length < 1
+      }"
+      @click="goToResultsPage"
+    >
+      {{ nextBtnText }}
+    </button>
+  </div>
 </template>
 
 <script>
-    import ProductList from "@/components/ProductList.vue";
+import ProductList from '@/components/ProductList.vue';
+import { mapState, mapActions } from 'vuex';
 
-    export default {
-    components: {
-        ProductList
-    },
-    data() {
-        return {
-            products: [
-                    {id: 1, name: 'Огурец', price: 100, payer: 'lol', consumers: []},
-                    {id: 2, name: 'Помидор', price: 200, payer: 'kek', consumers: []},
-                    {id: 3, name: 'Баклажан', price: 300, payer: 'oru', consumers: []}
-            ],
-            nextBtnText: 'Перейти к результатам'
-        }
-    },
-    methods: {
-        createProduct() {
-            const product = {
-                id: Date.now(),
-                name: '',
-                price: 0,
-                payer: null,
-                consumers: []
-            }
-            this.products.push(product);
-        },
-        removeProduct(product) {
-            this.products = this.products.filter(p => p.id !== product.id)
-        },
-        goToResultsPage(event) {
-            this.$router.push('/results');
-        }
+export default {
+  components: {
+    ProductList
+  },
+  data() {
+    return {
+      nextBtnText: 'Перейти к результатам'
+    };
+  },
+  methods: {
+    ...mapActions({
+      createProduct: 'product/createProduct',
+      removeProduct: 'product/removeProduct'
+    }),
+    goToResultsPage(event) {
+      this.$router.push('/results');
     }
-}
+  },
+  computed: {
+    ...mapState({
+      products: state => state.product.products
+    })
+  }
+};
 </script>
 
 <style lang="sass">
