@@ -15,7 +15,12 @@
         <div class="person" v-for="person in persons" :key="person.id">
           <div>
             <div><strong>Имя человека: </strong>{{ person.name }}</div>
-            <my-input v-model="person.name" type="text" placeholder="Имя" />
+            <input
+              :value="person.name"
+              @input="editPerson({id: person.id, name: $event.target.value})"
+              type="text" 
+              placeholder="Введите имя..." 
+              />
           </div>
           <div class="person__btns">
             <button
@@ -29,64 +34,53 @@
         </div>
       </list-component>
     </div>
-
+    <h4 v-else style="color: red">Список людей пуст</h4>
+    
     <button
-      type="button"
-      class="btn btn-outline-success"
-      :class="{ isDisabledNextBtn: persons.length < 2 }"
-      @click="handleButtonClick"
-    >
-      {{
-        persons.length === 0
-          ? 'Но тут же никого нет!'
-          : persons.length === 1
-          ? 'Добавьте еще кого-нибудь'
-          : 'Перейти к добавлению позиций в меню'
-      }}
-      <button
         type="button"
-        class="btn btn-outline-success"
-        :class="{ disabled: isDisabled }"
+        class="btn btn-outline-success next__btn"
+        :class="{ disabledNextBtn: isDisabledNextBtn }"
         @click="goToProductsPages"
       >
         {{ nextButtonText }}
       </button>
-    </button>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import ListComponent from '@/components/ListComponent.vue';
 
 export default {
   components: { ListComponent },
   data() {
     return {
+      personName: '',
+      personId: null,
       isDisabledNextBtn: false,
       nextButtonText: 'Перейти к добавлению позиций в меню'
     };
   },
   methods: {
+    ...mapMutations({
+      setPersonName: 'person/setPersonName'
+    }),
     ...mapActions({
       createPerson: 'person/createPerson',
+      editPerson: 'person/editPerson',
       removePerson: 'person/removePerson'
     }),
     goToProductsPages() {
-      if (this.persons.length >= 2) {
-        this.$router.push('/products');
-      } else if (this.persons.length === 0) {
-        this.nextBtnText = 'Но тут же никого нет!';
-        const msgCounter = setTimeout(() => {
-          this.nextBtnText = 'Перейти к добавлению позиций в меню';
-          clearTimeout(msgCounter);
-        }, 2500);
+      if (this.persons.length < 2){
+        this.isDisabledNextBtn = true
+        this.nextButtonText = this.persons.length 
+                ? 'Добавьте еще кого-нибудь' : 'Но тут же никого нет!';
+        setTimeout(() => {
+          this.isDisabledNextBtn = false
+          this.nextButtonText = 'Перейти к добавлению позиций в меню'
+        }, 2000);
       } else {
-        this.nextBtnText = 'Добавьте еще кого-нибудь';
-        const msgCounter = setTimeout(() => {
-          this.nextBtnText = 'Перейти к добавлению позиций в меню';
-          clearTimeout(msgCounter);
-        }, 2500);
+        this.$router.push('/products');
       }
     }
   },
@@ -108,9 +102,7 @@ export default {
 .next__btn
     align-self: flex-center
     margin-top: 15px
-.stop-next__btn
-    align-self: flex-center
-    margin-top: 15px
+.disabledNextBtn
     color: red
 .person
     padding: 15px

@@ -1,16 +1,5 @@
 <template>
-  <div v-if="products.length > 0">
-    <h3>Список продуктов</h3>
-    <transition-group name="product-list">
-      <product-item
-        v-for="product in products"
-        :key="product.id"
-        :product="product"
-        @remove="$emit('remove', product)"
-      />
-    </transition-group>
-  </div>
-  <h2 v-else style="color: red">Список продуктов пуст</h2>
+  
 </template>
 
 <script>
@@ -40,14 +29,4 @@ export default {
 .product-list-leave-to
     opacity: 0
     transform: translateX(130px)
-.product
-    padding: 15px
-    border: 2px solid teal
-    border-radius: 15px
-    margin-top: 15px
-    display: flex
-    align-items: center
-    justify-content: space-between
-.remove__btn
-    margin-right: 15px
 </style>

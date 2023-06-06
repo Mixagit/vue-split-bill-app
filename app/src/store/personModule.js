@@ -6,13 +6,20 @@ export const personModule = {
       { id: 3, name: 'Sanya' }
     ]
   }),
-  getters: {},
+  getters: {
+    getPersonsNames(state) {
+      return state.persons.map((p) => p.name)
+    }
+  },
   mutations: {
     add(state, person) {
       state.persons.push(person);
     },
-    remove(state, personId) {
-      state.persons = state.persons.filter(p => p.id !== personId);
+    edit(state, {id, name}) {
+      state.persons.find(p => p.id === id).name = name;
+    },
+    remove(state, id) {
+      state.persons = state.persons.filter(p => p.id !== id);
     }
   },
   actions: {
@@ -22,6 +29,9 @@ export const personModule = {
         name: ''
       };
       commit('add', person);
+    },
+    editPerson({ commit }, {id, name}) {
+      commit('edit', {id, name});
     },
     removePerson({ commit }, person) {
       commit('remove', person.id);
