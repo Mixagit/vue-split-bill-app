@@ -14,25 +14,26 @@ export const productModule = {
     add(state, product) {
       state.products.push(product);
     },
-    editName(state, {id, name}) {
+    editName(state, { id, name }) {
       state.products.find(p => p.id === id).name = name;
     },
-    editPrice(state, {id, price}) {
+    editPrice(state, { id, price }) {
       state.products.find(p => p.id === id).price = price;
     },
-    editPayer(state, {id, payer}) {
+    editPayer(state, { id, payer }) {
       state.products.find(p => p.id === id).payer = payer;
     },
-    toggleConsumer(state, {id, personName}) {
-      const consumers = state.products.find(p => p.id === id).consumers
-      const index = consumers.indexOf(personName);
-      index === -1 ? consumers.push(personName) : consumers.splice(index, 1)
+    toggleConsumer(state, { id, person }) {
+      const consumers = state.products.find(p => p.id === id).consumers;
+      const index = consumers.indexOf(person);
+      index === -1 ? consumers.push(person) : consumers.splice(index, 1);
     },
-    toggleAllConsumers(state, {id, personNames}) {
-      const consumers = state.products.find(p => p.id === id).consumers
-      state.products.find(p => p.id === id).consumers = []
-      if (consumers.length !== personNames.length) {
-        state.products.find(p => p.id === id).consumers = consumers.concat(personNames)
+    toggleAllConsumers(state, { id, persons }) {
+      const consumers = state.products.find(p => p.id === id).consumers;
+      const flag = consumers.length !== persons.length;
+      consumers.splice(0, consumers.length);
+      if (flag) {
+        persons.forEach(c => consumers.push(c.id));
       }
     },
     remove(state, productId) {
@@ -50,20 +51,20 @@ export const productModule = {
       };
       commit('add', product);
     },
-    editProductName({ commit }, {id, name}) {
-      commit('editName', {id, name});
+    editProductName({ commit }, { id, name }) {
+      commit('editName', { id, name });
     },
-    editProductPrice({ commit }, {id, price}) {
-      commit('editPrice', {id, price});
+    editProductPrice({ commit }, { id, price }) {
+      commit('editPrice', { id, price });
     },
-    editProductPayer({ commit }, {id, payer}) {
-      commit('editPayer', {id, payer});
+    editProductPayer({ commit }, { id, payer }) {
+      commit('editPayer', { id, payer });
     },
-    toggleConsumer({ commit }, {id, personName}) {
-      commit('toggleConsumer', {id, personName})
+    toggleConsumer({ commit }, { id, person }) {
+      commit('toggleConsumer', { id, person });
     },
-    toggleAllConsumers({ commit }, {id, personNames}) {
-      commit('toggleAllConsumers', {id, personNames})
+    toggleAllConsumers({ commit }, { id, persons }) {
+      commit('toggleAllConsumers', { id, persons });
     },
     removeProduct({ commit }, product) {
       commit('remove', product.id);
