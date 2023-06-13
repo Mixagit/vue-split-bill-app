@@ -29,7 +29,10 @@
             <input
               :value="product.price"
               @input="
-                editProductPrice({ id: product.id, price: $event.target.value })
+                editProductPrice({
+                  id: product.id,
+                  price: +$event.target.value
+                })
               "
               type="number"
               placeholder="Цена"
