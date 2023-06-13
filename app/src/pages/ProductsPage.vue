@@ -15,53 +15,75 @@
         <div class="product" v-for="product in products" :key="product.id">
           <div>
             <div><strong>Название продукта: </strong>{{ product.name }}</div>
-            <input 
+            <input
               :value="product.name"
-              @input="editProductName({id: product.id, name: $event.target.value})" 
-              type="text" 
-              placeholder="Имя" 
+              @input="
+                editProductName({ id: product.id, name: $event.target.value })
+              "
+              type="text"
+              placeholder="Имя"
             />
           </div>
           <div>
             <div><strong>Цена продукта: </strong>{{ product.price }}</div>
-            <input 
-              :value.trim="product.price"
-              @input="editProductPrice({id: product.id, price: $event.target.value})"
+            <input
+              :value="product.price"
+              @input="
+                editProductPrice({ id: product.id, price: $event.target.value })
+              "
               type="number"
               placeholder="Цена"
             />
           </div>
-      
+
           <div class="payer">
             <select
-              :value="product.payer"
-              @change="editProductPayer({id: product.id, payer: $event.target.value})"
+              name="payer"
               class="form-select"
-              aria-label="Default select example"
+              @change="
+                e =>
+                  editProductPayer({
+                    id: product.id,
+                    payer: +e.target.value
+                  })
+              "
+              :value="product.payer"
             >
-              <option v-for="person in persons" :key="person.id">
+              <option
+                v-for="person in persons"
+                :key="person.id"
+                :value="person.id"
+              >
                 {{ person.name }}
               </option>
             </select>
+
             <strong>payer: {{ product.payer }}</strong>
           </div>
-      
+
           <div class="consumers">
-            
             <div
-              style="background-color: pink"
-              :class="{selected: consumers.length === clients.length}"
-              @click="toggleAllConsumers({id: product.id, personNames: getPersonsNames})"
+              class="not_selected"
+              :class="{ selected: product.consumers.length === persons.length }"
+              @click="
+                toggleAllConsumers({
+                  id: product.id,
+                  persons: persons
+                })
+              "
               checked
             >
               ALL
             </div>
             <div v-for="person in persons" :key="person.id">
               <div
-                style="background-color: teal"
-                @click="toggleConsumer({id: product.id, personName: person.name})"
+                class="not_selected"
+                :class="{
+                  selected: product.consumers.includes(person.id)
+                }"
+                @click="toggleConsumer({ id: product.id, person: person.id })"
               >
-              {{ person.name }}
+                {{ person.name }}
               </div>
             </div>
           </div>
@@ -76,9 +98,6 @@
           </div>
         </div>
       </list-component>
-
-      
-
     </div>
     <h4 v-else style="color: red">Список людей пуст</h4>
 
@@ -97,7 +116,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import ListComponent from '@/components/ListComponent.vue';
 
 export default {
@@ -117,13 +136,9 @@ export default {
       toggleAllConsumers: 'product/toggleAllConsumers',
       removeProduct: 'product/removeProduct'
     }),
-    // toggleAllConsumers() {
-    //   if (this.selectAllConsumers) {
-    //     this.selectedConsumers = this.product.consumers.map(c => c.id);
-    //   } else {
-    //     this.selectedConsumers = [];
-    //   }
-    // },
+    ...mapMutations({
+      editPayer: 'product/editPayer'
+    }),
     goToResultsPage(event) {
       this.$router.push('/results');
     }
@@ -132,10 +147,15 @@ export default {
     ...mapState({
       products: state => state.product.products,
       persons: state => state.person.persons
-    }),
-    ...mapGetters({
-      getPersonsNames: 'person/getPersonsNames'
     })
+  },
+  mounted() {
+    this.products.forEach(product => {
+      this.editPayer({
+        id: product.id,
+        payer: this.persons[0].id
+      });
+    });
   }
 };
 </script>
@@ -154,7 +174,7 @@ export default {
     align-self: flex-center
     margin-top: 15px
     color: red
-  
+
 .product
     padding: 15px
     border: 2px solid teal
@@ -165,4 +185,8 @@ export default {
     justify-content: space-between
 .remove__btn
     margin-right: 15px
+.not_selected
+  background-color: pink
+.selected
+  background-color: teal
 </style>
