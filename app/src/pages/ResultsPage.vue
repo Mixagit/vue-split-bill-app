@@ -1,6 +1,6 @@
 <template>
-  <div class="results">
-    <h1>Результаты</h1>
+  <div class="container">
+    <h1 class="header">Результаты</h1>
     <div>
       <h2>Суммарные расходы на еду:</h2>
       <ul>
@@ -10,12 +10,13 @@
           {{ calculateTotalPersonExpenses(person.id) }}
         </li>
       </ul>
+      <button @click="calcWhoOwesWhom">oru</button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   computed: {
@@ -48,26 +49,59 @@ export default {
       const owedList = [];
 
       this.persons.forEach(person => {
-        const totalExpenses = calculateTotalPersonExpenses(person.id);
-        const totalEaten = calculateTotalPersonEaten(person.id);
+        const totalExpenses = this.calculateTotalPersonExpenses(person.id);
+        const totalEaten = this.calculateTotalPersonEaten(person.id);
         if (totalExpenses > totalEaten) {
           debtorList.push({
-            id: person.id,
+            id: person.name,
             balance: totalExpenses - totalEaten
           });
-        } else {
+        } else if (totalEaten > totalExpenses) {
           owedList.push({
-            id: person.id,
-            balance: totalExpenses - totalEaten
+            id: person.name,
+            balance: totalEaten - totalExpenses
           });
         }
       });
 
       return { debtorList, owedList };
     },
-    calcWhoOwesWhom(debtorList, owedList) {
-      const owed = owedList.pop();
-      owedList.forEach(owed => {});
+    calcWhoOwesWhom() {
+      const debtorList = [];
+      const owedList = [];
+      this.persons.forEach(person => {
+        const totalExpenses = this.calculateTotalPersonExpenses(person.id);
+        const totalEaten = this.calculateTotalPersonEaten(person.id);
+        if (totalExpenses > totalEaten) {
+          debtorList.push({
+            id: person.name,
+            balance: totalExpenses - totalEaten
+          });
+        } else if (totalEaten > totalExpenses) {
+          owedList.push({
+            id: person.name,
+            balance: totalEaten - totalExpenses
+          });
+        }
+      });
+
+      while (debtorList.length > 0 || owedList.length > 0) {
+        const owed = owedList[0];
+        const debtor = debtorList[0];
+        if (owed.balance < debtor.balance) {
+          console.log(owed.id, 'должен', debtor.id, ' - ', owed.balance);
+          debtor.balance -= owed.balance;
+          owedList.shift();
+        } else if (owed.balance > debtor.balance) {
+          console.log(owed.id, 'должен', debtor.id, ' - ', debtor.balance);
+          owed.balance -= debtor.balance;
+          debtorList.shift();
+        } else if (owed.balance === debtor.balance) {
+          console.log(owed.id, 'должен', debtor.id, ' - ', debtor.balance);
+          owedList.shift();
+          debtorList.shift();
+        }
+      }
     }
   }
 };
