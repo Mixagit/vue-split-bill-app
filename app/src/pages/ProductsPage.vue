@@ -215,6 +215,10 @@ export default {
         add() {
             if (this.persons.length > 1) {
                 this.createProduct();
+                this.editPayer({
+                    id: this.products[0].id,
+                    payer: this.persons[0].id,
+                });
                 nextTick(() => {
                     const list = this.$el.querySelector(".list");
                     list.scrollTop = 0;
@@ -305,7 +309,7 @@ export default {
         this.products.forEach((product) => {
             this.editPayer({
                 id: product.id,
-                payer: this.products[0].id,
+                payer: this.persons[0].id,
             });
         });
     },
