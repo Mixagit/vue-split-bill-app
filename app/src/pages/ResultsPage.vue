@@ -56,6 +56,7 @@ export default {
             this.$router.push("/persons");
         },
         getPersonName(id) {
+            if (id === 0) return "nobody";
             return this.persons.find((p) => p.id === id).name;
         },
         calculateTotalPersonEaten(personId) {
@@ -79,11 +80,12 @@ export default {
         calcWhoOwesWhom() {
             const debtorList = [];
             const owedList = [];
+            let totalExpenses = 0;
+            let totalEaten = 0;
+
             this.persons.forEach((person) => {
-                const totalExpenses = this.calculateTotalPersonExpenses(
-                    person.id
-                );
-                const totalEaten = this.calculateTotalPersonEaten(person.id);
+                totalExpenses = this.calculateTotalPersonExpenses(person.id);
+                totalEaten = this.calculateTotalPersonEaten(person.id);
                 if (totalExpenses > totalEaten) {
                     debtorList.push({
                         id: person.id,
@@ -98,15 +100,23 @@ export default {
             });
 
             while (debtorList.length > 0 || owedList.length > 0) {
-                const owed = owedList[0];
                 const debtor = debtorList[0];
+                const owed = owedList[0];
+                console.log("debtor - ", debtor);
+                console.log("owed - ", owed);
+                if (!owed && !debtor) {
+                    this.results.push("Никто никому ничего не должен!");
+                    return;
+                } else if (!owed || !debtor) {
+                    return;
+                }
                 if (owed.balance < debtor.balance) {
                     this.results.push(
                         this.getPersonName(owed.id) +
                             " должен " +
                             this.getPersonName(debtor.id) +
                             " - " +
-                            owed.balance
+                            owed.balance.toFixed(2)
                     );
                     debtor.balance -= owed.balance;
                     owedList.shift();
@@ -116,7 +126,7 @@ export default {
                             " должен " +
                             this.getPersonName(debtor.id) +
                             " - " +
-                            debtor.balance
+                            debtor.balance.toFixed(2)
                     );
                     owed.balance -= debtor.balance;
                     debtorList.shift();
@@ -126,7 +136,7 @@ export default {
                             " должен " +
                             this.getPersonName(debtor.id) +
                             " - " +
-                            debtor.balance
+                            debtor.balance.toFixed(2)
                     );
                     owedList.shift();
                     debtorList.shift();

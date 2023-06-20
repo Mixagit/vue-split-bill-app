@@ -17,15 +17,11 @@
                             :value="person.name"
                             @input="handleNameChange($event, person)"
                             type="text"
-                            ref="name"
                             placeholder="Введите имя..."
                             class="input"
                             id="input"
                         />
-                        <i
-                            class="bi bi-pencil-fill hidden__btn"
-                            @click="focusInput"
-                        ></i>
+                        <i class="bi bi-pencil-fill hidden__btn"></i>
                         <error-hint
                             :errors="nameErrors"
                             :itemId="person.id"
@@ -96,9 +92,6 @@ export default {
                 list.scrollTop = 0;
             });
         },
-        focusInput() {
-            nextTick(() => this.$el.querySelector(".input").focus());
-        },
         handleNameChange(event, person) {
             this.editPerson({
                 id: person.id,
@@ -162,10 +155,12 @@ export default {
 .item
     display: flex
     align-items: center
-    justify-content: space-between
     .input
         margin: auto
         margin-left: 15px
+        flex: 1
+    .remove__btn
+        margin: auto
 .name
     display: flex
     justify-content: space-between

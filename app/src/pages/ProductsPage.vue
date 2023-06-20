@@ -35,18 +35,22 @@
                     <div class="params">
                         <div class="top__params">
                             <div class="name">
-                                <input
-                                    v-focus
-                                    :value="product.name"
-                                    @input="handleNameChange($event, product)"
-                                    type="text"
-                                    placeholder="Введите название..."
-                                    class="input"
-                                />
-                                <i
-                                    class="bi bi-pencil-fill edit_icon hidden__btn"
-                                    @click.native="focusInput"
-                                ></i>
+                                <div class="inp__icon">
+                                    <input
+                                        v-focus
+                                        :value="product.name"
+                                        @input="
+                                            handleNameChange($event, product)
+                                        "
+                                        type="text"
+                                        placeholder="Введите название..."
+                                        class="input"
+                                    />
+                                    <i
+                                        class="bi bi-pencil-fill edit_icon hidden__btn"
+                                        @click.native="focusInput"
+                                    ></i>
+                                </div>
                                 <error-hint
                                     :errors="nameErrors"
                                     :itemId="product.id"
@@ -55,17 +59,22 @@
                                 >
                             </div>
                             <div class="price">
-                                <input
-                                    :value="product.price"
-                                    @input="handlePriceChange($event, product)"
-                                    type="number"
-                                    placeholder="Введите цену..."
-                                    class="input"
-                                />
-                                <i
-                                    class="bi bi-pencil-fill edit_icon hidden__btn"
-                                    @click.native="focusInput"
-                                ></i>
+                                <div class="inp__icon">
+                                    <input
+                                        :value="product.price"
+                                        @input="
+                                            handlePriceChange($event, product)
+                                        "
+                                        type="number"
+                                        placeholder="Введите цену..."
+                                        class="input"
+                                    />
+                                    <i
+                                        class="bi bi-pencil-fill edit_icon hidden__btn"
+                                        @click.native="focusInput"
+                                    ></i>
+                                </div>
+
                                 <error-hint
                                     :errors="priceErrors"
                                     :itemId="product.id"
@@ -86,7 +95,6 @@
                                     "
                                     :value="product.payer"
                                 >
-                                    <i class="bi bi-credit-card-fill"></i>
                                     <option
                                         v-for="person in persons"
                                         :key="person.id"
@@ -95,6 +103,9 @@
                                         {{ person.name }}
                                     </option>
                                 </select>
+                                <i
+                                    class="bi bi-credit-card-fill payer__icon"
+                                ></i>
                             </div>
                         </div>
 
@@ -296,7 +307,7 @@ export default {
                 setTimeout(() => {
                     this.priceErrors = [];
                 }, 2000);
-            } else {
+            } else if (!this.nameErrors.length) {
                 this.$router.push("/results");
             }
         },
@@ -322,6 +333,28 @@ export default {
     display: flex
     .params
         width: 80%
+    .name, .price
+        flex: 1
+        margin-right: 35px
+        display: flex
+        flex-direction: column
+    .payer
+        flex: 1
+        display: flex
+        .select
+            border: 2px solid $color-text
+            border-radius: 10px
+            padding: 10px 15px
+            box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2) inset
+    .payer__icon
+        margin-left: 10px
+    .inp__icon
+        display: flex
+    .input
+        margin: auto
+        flex: 1
+    .error-hint
+        margin-top: 10px
     .remove__btn
         margin: auto
 .top__params
