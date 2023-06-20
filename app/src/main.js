@@ -1,22 +1,14 @@
-import { createApp } from 'vue'
-import router from '@/router/router';
-import components from '@/components/UI';
-import directives from '@/directives';
-import store from '@/store';
+import { createApp } from "vue";
+import router from "@/router/router";
+import directives from "@/directives";
+import store from "@/store";
 
-import '@/styles/style.sass';
-import App from './App.vue';
-const app = createApp(App)
+import "@/styles/style.sass";
+import App from "./App.vue";
+const app = createApp(App);
 
-components.forEach(component => {
-    app.component(component.name, component)
+directives.forEach((directive) => {
+    app.directive(directive.name, directive);
 });
 
-directives.forEach(directive => {
-    app.directive(directive.name, directive)
-})
-
-app
-    .use(router)
-    .use(store)
-    .mount('#app')
+app.use(router).use(store).mount("#app");
