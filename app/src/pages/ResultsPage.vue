@@ -13,18 +13,26 @@
                 </div>
             </list-component>
         </div>
-        <button @click="calcWhoOwesWhom">oru</button>
+        <button
+            type="button"
+            class="btn next__btn"
+            :class="{ disabledNextBtn: isDisabledNextBtn }"
+            @click="goToReload"
+        >
+            {{ nextButtonText }}
+        </button>
     </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import ListComponent from "@/components/ListComponent.vue";
 
 export default {
     components: { ListComponent },
     data() {
         return {
+            nextButtonText: "Перейти к новому счёту",
             results: [],
         };
     },
@@ -39,13 +47,13 @@ export default {
             return this.persons.find((p) => p.id === id).name;
         },
         calculateTotalPersonEaten(personId) {
-            let totalPersonCost = 0;
+            let sum = 0;
             this.products.forEach((product) => {
                 if (product.consumers.includes(personId)) {
-                    totalPersonCost += product.price / product.consumers.length;
+                    sum += product.price / product.consumers.length;
                 }
             });
-            return totalPersonCost;
+            return sum;
         },
         calculateTotalPersonExpenses(personId) {
             let sum = 0;
@@ -136,6 +144,15 @@ export default {
                     debtorList.shift();
                 }
             }
+        },
+        ...mapMutations({
+            resetPersons: "person/resetPersons",
+            resetProducts: "product/resetProducts",
+        }),
+        goToReload() {
+            this.resetProducts();
+            this.resetPersons();
+            this.$router.push("/persons");
         },
     },
     mounted() {

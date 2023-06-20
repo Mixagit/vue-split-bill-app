@@ -4,21 +4,23 @@
             Делим счёт в кафе
         </div>
         <div class="navbar__btns">
-            <my-button class="nav__btn" @click="$router.push('/persons')"
-                >Добавить людей</my-button
-            >
-            <my-button
-                class="nav__btn"
+            <button class="btn nav__btn" @click="$router.push('/persons')">
+                Добавить людей
+            </button>
+            <button
+                class="btn nav__btn"
                 @click="$router.push('/products')"
                 style="margin-left: 20px"
-                >Добавить позиции</my-button
             >
-            <my-button
-                class="nav__btn"
+                Добавить позиции
+            </button>
+            <button
+                class="btn nav__btn"
                 @click="$router.push('/results')"
                 style="margin-left: 20px"
-                >Результаты</my-button
             >
+                Результаты
+            </button>
         </div>
     </nav>
 </template>

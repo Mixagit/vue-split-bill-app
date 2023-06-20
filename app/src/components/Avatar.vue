@@ -8,31 +8,26 @@
     </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from "vue";
-
-const props = defineProps({
-    name: {
-        type: String,
-        default: "",
+<script>
+export default {
+    props: {
+        name: {
+            type: String,
+            default: "",
+        },
     },
-});
 
-const containerRef = ref();
-const fontSize = ref("1rem");
+    data() {
+        return {
+            containerRef: null,
+            fontSize: "1rem",
+        };
+    },
 
-onMounted(() => {
-    // The font size should be 50% of the container width
-    fontSize.value = `${containerRef.value.clientWidth * 0.5}px`;
-});
-
-const bgColor = computed(() => {
-    const hue =
-        props.name.split("").reduce((acc, cur) => {
-            return acc + cur.charCodeAt(0);
-        }, 0) % 360;
-    return `hsla(${hue}, 60%, 50%, 1)`;
-});
+    mounted() {
+        this.fontSize = `${this.$refs.containerRef.clientWidth * 0.5}px`;
+    },
+};
 </script>
 
 <style scoped lang="sass">

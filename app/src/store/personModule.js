@@ -6,11 +6,6 @@ export const personModule = {
             { id: 3, name: "Sanya" },
         ],
     }),
-    getters: {
-        getPersonName(state, id) {
-            return state.persons.find((p) => p.id === id).name;
-        },
-    },
     mutations: {
         add(state, person) {
             state.persons.unshift(person);
@@ -20,6 +15,9 @@ export const personModule = {
         },
         remove(state, id) {
             state.persons = state.persons.filter((p) => p.id !== id);
+        },
+        resetPersons(state) {
+            state.persons = [];
         },
     },
     actions: {

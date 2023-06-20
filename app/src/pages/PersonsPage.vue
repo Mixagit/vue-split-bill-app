@@ -43,7 +43,13 @@
                 </div>
             </list-component>
         </div>
-        <h4 v-else class="empty__list">Список людей пуст</h4>
+        <div v-else class="empty__list">
+            <h4>Список людей пуст</h4>
+            <p>
+                Вы можете добавить людей, которые есть в вашем чеке по кнопке
+                выше
+            </p>
+        </div>
 
         <button
             type="button"
@@ -87,7 +93,7 @@ export default {
             this.createPerson();
             nextTick(() => {
                 const list = this.$el.querySelector(".list");
-                list.scrollTop = list.scrollHeight;
+                list.scrollTop = 0;
             });
         },
         focusInput() {
@@ -111,6 +117,12 @@ export default {
         },
         goToProductsPages() {
             if (this.persons.some((person) => person.name === "")) {
+                this.isDisabledNextBtn = true;
+                this.nextButtonText = "Заполните пустые имена";
+                setTimeout(() => {
+                    this.isDisabledNextBtn = false;
+                    this.nextButtonText = "Перейти к добавлению позиций в меню";
+                }, 2000);
                 this.persons.forEach((person) => {
                     if (person.name === "") {
                         this.nameErrors.push(person.id);
@@ -135,6 +147,12 @@ export default {
             }
         },
     },
+    mounted() {
+        nextTick(() => {
+            const list = this.$el.querySelector(".list");
+            if (list) list.scrollTop = 0;
+        });
+    },
 };
 </script>
 
@@ -146,6 +164,15 @@ export default {
     align-items: center
     justify-content: space-between
     .input
-    margin: auto
+        margin: auto
+        margin-left: 15px
+.name
+    display: flex
+    justify-content: space-between
+    .avatar
+        margin: auto
+        width: 70px
+    .error__hint
+        margin: auto
         margin-left: 15px
 </style>
