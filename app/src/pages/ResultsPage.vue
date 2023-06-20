@@ -42,7 +42,19 @@ export default {
             persons: (state) => state.person.persons,
         }),
     },
+    mounted() {
+        this.calcWhoOwesWhom();
+    },
     methods: {
+        ...mapMutations({
+            resetPersons: "person/resetPersons",
+            resetProducts: "product/resetProducts",
+        }),
+        goToReload() {
+            this.resetProducts();
+            this.resetPersons();
+            this.$router.push("/persons");
+        },
         getPersonName(id) {
             return this.persons.find((p) => p.id === id).name;
         },
@@ -63,30 +75,6 @@ export default {
                 }
             });
             return sum;
-        },
-        createQueues() {
-            const debtorList = [];
-            const owedList = [];
-
-            this.persons.forEach((person) => {
-                const totalExpenses = this.calculateTotalPersonExpenses(
-                    person.id
-                );
-                const totalEaten = this.calculateTotalPersonEaten(person.id);
-                if (totalExpenses > totalEaten) {
-                    debtorList.push({
-                        id: person.name,
-                        balance: totalExpenses - totalEaten,
-                    });
-                } else if (totalEaten > totalExpenses) {
-                    owedList.push({
-                        id: person.name,
-                        balance: totalEaten - totalExpenses,
-                    });
-                }
-            });
-
-            return { debtorList, owedList };
         },
         calcWhoOwesWhom() {
             const debtorList = [];
@@ -145,18 +133,6 @@ export default {
                 }
             }
         },
-        ...mapMutations({
-            resetPersons: "person/resetPersons",
-            resetProducts: "product/resetProducts",
-        }),
-        goToReload() {
-            this.resetProducts();
-            this.resetPersons();
-            this.$router.push("/persons");
-        },
-    },
-    mounted() {
-        this.calcWhoOwesWhom();
     },
 };
 </script>
