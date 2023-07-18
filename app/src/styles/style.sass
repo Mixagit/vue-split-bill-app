@@ -1,0 +1,119 @@
+@import "~bootstrap/scss/bootstrap.scss"
+@import "~icons/font/bootstrap-icons.css"
+
+@import "@/styles/variables.sass"
+
+body
+    min-height: 100vh
+    overflow: hidden
+    background-color: $color-main
+    color: $color-text
+.container
+    display: flex
+    flex-flow: column
+    background-color: $color-secondary
+    width: 90%
+    height: 80vh
+    border: 2px solid $color-text
+    border-radius: 10px
+    padding: 20px 40px
+    box-shadow: 0 2px 4px 5px rgba(0, 0, 0, 0.3)
+    .header
+        margin: 10px auto
+    .add__btn
+        margin: 10px auto
+        color: $color-text
+        border: 1px solid $color-text
+        &:hover
+            background-color: $color-active
+            color: white
+        i
+            margin-top: 0px
+            margin-right: 10px
+.link
+    cursor: pointer
+    color: $color-text
+    transition: color 200ms ease-out, border-color 200ms ease-out
+    &:hover
+        color: $color-active
+        border-color: $color-active
+.input
+    width: 250px
+    width: 100%
+    border: 2px solid $color-text
+    border-radius: 10px
+    padding: 10px 15px
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2) inset
+.list
+    flex: 1
+    overflow: auto
+    overflow-x: hidden
+    padding: 15px
+    scrollbar-width: thin
+    scrollbar-color: #999999 #f5f5f5
+    .item
+        padding: 15px
+        border: 2px solid $color-text
+        border-radius: 10px
+        margin-top: 15px
+        &:hover 
+            scale: 1.02
+            .hidden__btn
+                opacity: 1
+        .hidden__btn
+            opacity: 0
+            transition: opacity 0.3s ease
+        i
+            margin: auto
+            margin-left: 5px
+        .remove__btn
+            margin-right: 15px
+            border: 1px solid $color-alarm
+            color: $color-alarm
+            &:hover
+                background-color: $color-alarm
+                color: white
+::-webkit-scrollbar
+    width: 10px
+::-webkit-scrollbar-track
+    background: transparent
+::-webkit-scrollbar-thumb
+    background: $color-main
+    border: 2px solid transparent
+    background-clip: padding-box
+    border-radius: 6px
+    &:hover
+        background: $color-main
+        border: none
+    &:active
+        background: $color-main
+.empty__list
+    flex: 1
+    color: $color-alarm
+.next__btn
+    margin: auto
+    margin-top: 15px
+    background-color: $color-main
+    color: $color-text
+    border: 1px solid $color-text
+    &:hover
+        scale: 1.01
+        background-color: $color-active
+        color: white
+.disabledNextBtn
+    background-color: $color-alarm
+    color: white
+    animation: shake 0.3s infinite
+    &:hover
+        background-color: $color-alarm
+@keyframes shake
+    0%
+        transform: translateX(0)
+    25%
+        transform: translateX(-5px)
+    50%
+        transform: translateX(5px)
+    75%
+        transform: translateX(-5px)
+    100%
+        transform: translateX(0)
