@@ -1,11 +1,14 @@
 <template>
-    <transition-group name="list" appear>
-        <slot></slot>
-    </transition-group>
+	<transition-group
+		name="list"
+		appear
+	>
+		<slot></slot>
+	</transition-group>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style lang="sass">

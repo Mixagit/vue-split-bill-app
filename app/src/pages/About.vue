@@ -1,15 +1,11 @@
 <template>
-    <div>
-        <h1>About</h1>
-    </div>
+	<div>
+		<h1>About</h1>
+	</div>
 </template>
 
 <script>
-export default {
-    
-}
+export default {}
 </script>
 
-<style scoped lang="sass">
-    
-</style>
+<style scoped lang="sass"></style>

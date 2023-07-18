@@ -1,18 +1,21 @@
 <template>
-    <transition name="fade">
-        <div v-if="errors.includes(itemId)" class="invalid__name">
-            <slot></slot>
-        </div>
-    </transition>
+	<transition name="fade">
+		<div
+			v-if="errors.includes(itemId)"
+			class="invalid__name"
+		>
+			<slot></slot>
+		</div>
+	</transition>
 </template>
 
 <script>
 export default {
-    props: {
-        errors: Array,
-        itemId: Number
-    }
-};
+	props: {
+		errors: Array,
+		itemId: Number
+	}
+}
 </script>
 
 <style lang="sass">

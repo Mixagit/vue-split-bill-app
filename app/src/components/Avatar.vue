@@ -1,33 +1,39 @@
 <template>
-    <div ref="containerRef" class="avatar">
-        <transition name="fade"
-            ><span v-if="name" class="initials">
-                {{ name[0] }}
-            </span>
-        </transition>
-    </div>
+	<div
+		ref="containerRef"
+		class="avatar"
+	>
+		<transition name="fade"
+			><span
+				v-if="name"
+				class="initials"
+			>
+				{{ name[0] }}
+			</span>
+		</transition>
+	</div>
 </template>
 
 <script>
 export default {
-    props: {
-        name: {
-            type: String,
-            default: "",
-        },
-    },
+	props: {
+		name: {
+			type: String,
+			default: ''
+		}
+	},
 
-    data() {
-        return {
-            containerRef: null,
-            fontSize: "1rem",
-        };
-    },
+	data() {
+		return {
+			containerRef: null,
+			fontSize: '1rem'
+		}
+	},
 
-    mounted() {
-        this.fontSize = `${this.$refs.containerRef.clientWidth * 0.5}px`;
-    },
-};
+	mounted() {
+		this.fontSize = `${this.$refs.containerRef.clientWidth * 0.5}px`
+	}
+}
 </script>
 
 <style scoped lang="sass">

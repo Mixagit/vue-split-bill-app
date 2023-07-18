@@ -1,32 +1,38 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="navbar-brand brand" @click="$router.push('/')">
-            Делим счёт в кафе
-        </div>
-        <div class="navbar__btns">
-            <button class="btn nav__btn" @click="$router.push('/persons')">
-                Добавить людей
-            </button>
-            <button
-                class="btn nav__btn"
-                @click="$router.push('/products')"
-                style="margin-left: 20px"
-            >
-                Добавить позиции
-            </button>
-            <button
-                class="btn nav__btn"
-                @click="$router.push('/results')"
-                style="margin-left: 20px"
-            >
-                Результаты
-            </button>
-        </div>
-    </nav>
+	<nav class="navbar navbar-expand-lg navbar-light">
+		<div
+			class="navbar-brand brand"
+			@click="$router.push('/')"
+		>
+			Делим счёт в кафе
+		</div>
+		<div class="navbar__btns">
+			<button
+				class="btn nav__btn"
+				@click="$router.push('/persons')"
+			>
+				Добавить людей
+			</button>
+			<button
+				class="btn nav__btn"
+				@click="$router.push('/products')"
+				style="margin-left: 20px"
+			>
+				Добавить позиции
+			</button>
+			<button
+				class="btn nav__btn"
+				@click="$router.push('/results')"
+				style="margin-left: 20px"
+			>
+				Результаты
+			</button>
+		</div>
+	</nav>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style scoped lang="sass">
